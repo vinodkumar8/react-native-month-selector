@@ -172,7 +172,6 @@ export class MonthSelectorCalendar extends Component {
   }
 
   handleMonthTaps(month) {
-    console.log(month);
     this.props.monthTapped(month);
   }
 
