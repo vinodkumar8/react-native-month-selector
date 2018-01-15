@@ -33,16 +33,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
   },
-  yearTextStyle: {
-    fontSize: 14,
-  },
   monthTextStyle: {
 
   },
 });
 
 const dateFormat = 'DD-MM-YYYY';
-const monthYearFormat = 'MM-YYYY';
+const monthYearFormat = 'MMYYYY';
 
 const getMonthListFirstDayDate = (date) => {
   const monthList = [];
@@ -58,11 +55,12 @@ export class MonthSelectorCalendar extends Component {
   static propTypes = {
     selectedDate: PropTypes.any,
     currentDate: PropTypes.any,
+    maxDate: PropTypes.any,
+    minDate: PropTypes.any,
     selectedBackgroundColor: PropTypes.string,
-    selectedForeGround: PropTypes.string,
+    selectedMonthStyle: PropTypes.any,
     seperatorColor: PropTypes.string,
     seperatorHeight: PropTypes.number,
-    yearColor: PropTypes.string,
     nextIcon: PropTypes.any,
     prevIcon: PropTypes.any,
     containerStyle: PropTypes.any,
@@ -72,13 +70,17 @@ export class MonthSelectorCalendar extends Component {
     monthFormat: PropTypes.string,
     initialView: PropTypes.any,
     monthTapped: PropTypes.func,
+    monthDisabledStyle: PropTypes.any,
+    onYearChanged: PropTypes.func,
   }
 
   static defaultProps = {
     selectedDate: moment(),
     currentDate: moment(),
+    maxDate: moment(),
+    minDate: moment('01-01-2000', 'DD-MM-YYYY'),
     selectedBackgroundColor: '#000',
-    selectedForeGround: '#fff',
+    selectedMonthStyle: { color: '#fff' },
     seperatorHeight: 1,
     seperatorColor: '#b6c3cb',
     nextIcon: null,
@@ -90,9 +92,10 @@ export class MonthSelectorCalendar extends Component {
       color: '#22ee11',
     },
     monthTextStyle: { color: '#000' },
-    yearColor: { color: '#000' },
     initialView: moment(),
     monthTapped: PropTypes.func,
+    monthDisabledStyle: { color: '#00000050' },
+    onYearChanged: () => {},
   }
   constructor(props) {
     super(props);
@@ -110,9 +113,9 @@ export class MonthSelectorCalendar extends Component {
   }
 
   getSelectedForeGround(month) {
-    if (this.props.selectedForeGround &&
+    if (this.props.selectedMonthStyle &&
        month.format(monthYearFormat) === this.props.selectedDate.format(monthYearFormat)) {
-      return { color: this.props.selectedForeGround };
+      return this.props.selectedMonthStyle;
     }
     if (month.format(monthYearFormat) === this.props.currentDate.format(monthYearFormat)) {
       return this.props.currentMonthTextStyle;
@@ -120,14 +123,16 @@ export class MonthSelectorCalendar extends Component {
     return {};
   }
 
-  getMonthActualComponent(month) {
+
+  getMonthActualComponent(month, isDisabled = false) {
     return (
       <View
-        style={[styles.monthStyle, this.getSelectedBackgroundColor(month)]}
+        style={[isDisabled === true && { flex: 1, alignItems: 'center' }, styles.monthStyle, this.getSelectedBackgroundColor(month)]}
       >
         <Text
           style={[styles.monthTextStyle,
            this.props.monthTextStyle, this.getSelectedForeGround(month),
+           isDisabled === true && this.props.monthDisabledStyle,
            ]}
         >
           {month.format(this.props.monthFormat)}
@@ -137,10 +142,33 @@ export class MonthSelectorCalendar extends Component {
   }
 
   getMonthComponent(month) {
-    return (
-      <TouchableOpacity onPres={() => this.handleMonthTaps(month)} style={{ flex: 1, alignItems: 'center' }}>
-        {this.getMonthActualComponent(month)}
-      </TouchableOpacity>);
+    if (this.isMonthEnabled(month)) {
+      return (
+        <TouchableOpacity onPress={() => this.handleMonthTaps(month)} style={{ flex: 1, alignItems: 'center' }}>
+          {this.getMonthActualComponent(month)}
+        </TouchableOpacity>);
+    }
+    return this.getMonthActualComponent(month, true);
+  }
+  isMonthEnabled(month) {
+    const minDateYear = this.props.minDate.format('YYYYMM');
+    const maxDateYear = this.props.maxDate.format('YYYYMM');
+    const currentYear = month.format('YYYYMM');
+    if (currentYear <= maxDateYear
+      && currentYear >= minDateYear) {
+      return true;
+    }
+    return false;
+  }
+
+  isYearEnabled(isNext) {
+    const minYear = this.props.minDate.format('YYYY');
+    const maxYear = this.props.maxDate.format('YYYY');
+    const currentYear = this.state.initialView.format('YYYY');
+    if ((isNext && currentYear < maxYear) || (!isNext && currentYear > minYear)) {
+      return true;
+    }
+    return false;
   }
 
   handleMonthTaps(month) {
@@ -148,8 +176,13 @@ export class MonthSelectorCalendar extends Component {
   }
 
   handNextPrevTaps(isNext) {
-    this.setState({ initialView: this.state.initialView.add(isNext ? 1 : -1, 'Y') });
+    if (this.isYearEnabled(isNext)) {
+      const currentInitialView = this.state.initialView.clone();
+      this.setState({ initialView: currentInitialView.add(isNext ? 1 : -1, 'Y') });
+      this.props.onYearChanged(this.state.currentInitialView);
+    }
   }
+
   renderQ(months, qNo) {
     const startMonth = qNo * 3;
     return (

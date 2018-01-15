@@ -1,6 +1,6 @@
 {
   "name": "react-native-month-selector",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Month selector in react native",
   "main": "src/index.js",
   "scripts": {
