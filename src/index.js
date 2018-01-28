@@ -93,7 +93,7 @@ export class MonthSelectorCalendar extends Component {
     },
     monthTextStyle: { color: '#000' },
     initialView: moment(),
-    monthTapped: PropTypes.func,
+    monthTapped: () => {},
     monthDisabledStyle: { color: '#00000050' },
     onYearChanged: () => {},
   }
