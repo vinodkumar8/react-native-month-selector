@@ -3,6 +3,8 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+require('moment/locale/id.js');
+require('moment/locale/zh-cn.js');
 
 // define your styles
 const styles = StyleSheet.create({
@@ -72,6 +74,7 @@ export class MonthSelectorCalendar extends Component {
     monthTapped: PropTypes.func,
     monthDisabledStyle: PropTypes.any,
     onYearChanged: PropTypes.func,
+    locale: PropTypes.object,
   }
 
   static defaultProps = {
@@ -96,12 +99,17 @@ export class MonthSelectorCalendar extends Component {
     monthTapped: () => {},
     monthDisabledStyle: { color: '#00000050' },
     onYearChanged: () => {},
+    locale: 'en',
   }
   constructor(props) {
     super(props);
     this.handleMonthTaps = this.handleMonthTaps.bind(this);
     this.handNextPrevTaps = this.handNextPrevTaps.bind(this);
     this.state = { initialView: props.initialView };
+  }
+
+  componentWillMount() {
+    moment.locale(this.props.locale);
   }
 
   getSelectedBackgroundColor(month) {

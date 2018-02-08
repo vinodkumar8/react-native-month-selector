@@ -1,6 +1,6 @@
 {
   "name": "react-native-month-selector",
-  "version": "1.1.0",
+  "version": "1.0.2",
   "description": "Month selector in react native",
   "main": "src/index.js",
   "scripts": {
@@ -21,10 +21,12 @@
     "url": "https://github.com/vinodkumar8/react-native-month-selector/issues"
   },
   "homepage": "https://github.com/vinodkumar8/react-native-month-selector#readme",
+  "dependencies": {
+    "moment": "^2.20.1"
+  },
   "peerDependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
-    "react-native": "^0.48.0",
-    "moment": "^2.20.1"
+    "react-native": "^0.48.0"
   }
 }
