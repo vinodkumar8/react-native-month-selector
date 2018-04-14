@@ -75,7 +75,7 @@ export class MonthSelectorCalendar extends Component {
     monthTapped: PropTypes.func,
     monthDisabledStyle: PropTypes.any,
     onYearChanged: PropTypes.func,
-    locale: PropTypes.object,
+    locale: PropTypes.string,
   }
 
   static defaultProps = {
