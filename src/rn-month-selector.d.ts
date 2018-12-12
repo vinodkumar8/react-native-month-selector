@@ -2,7 +2,7 @@ import { Moment } from "moment";
 import { TextStyle, ViewStyle } from "react-native";
 
 declare module "rn-month-selector" {
-  export default interface MonthSelector {
+  export default interface MonthSelectorType {
     selectedDate: Moment;
     currentDate: Moment;
     maxDate: Moment;
