@@ -1,6 +1,6 @@
 {
   "name": "react-native-swipeable-month-selector",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Swipable month selector in react native",
   "main": "dist/MonthSelector.js",
   "files": [
