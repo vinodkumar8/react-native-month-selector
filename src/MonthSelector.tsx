@@ -44,11 +44,12 @@ interface MonthSelectorProps {
   currentMonthTextStyle: TextStyle
   monthFormat: string
   initialView: moment.Moment
-  monthTapped: (month: moment.Moment) => any
-  monthDisabledStyle: TextStyle
+  onMonthTapped: (month: moment.Moment) => any
   onYearChanged: (year: moment.Moment) => any
+  monthDisabledStyle: TextStyle
   localeLanguage: string
   localeSettings: moment.LocaleSpecification
+  swipable: boolean
   velocityThreshold: number
   directionalOffsetThreshold: number
   gestureIsClickThreshold: number
@@ -81,11 +82,12 @@ class MonthSelector extends React.Component<
     currentMonthTextStyle: PropTypes.any,
     monthFormat: PropTypes.string,
     initialView: PropTypes.any,
-    monthTapped: PropTypes.func,
-    monthDisabledStyle: PropTypes.any,
+    onMonthTapped: PropTypes.func,
     onYearChanged: PropTypes.func,
+    monthDisabledStyle: PropTypes.any,
     localeLanguage: PropTypes.string,
     localeSettings: PropTypes.any,
+    swipable: PropTypes.bool,
     velocityThreshold: PropTypes.number,
     directionalOffsetThreshold: PropTypes.number,
     gestureIsClickThreshold: PropTypes.number,
@@ -112,11 +114,12 @@ class MonthSelector extends React.Component<
     },
     monthTextStyle: { color: "#000" },
     initialView: moment(),
-    monthTapped: month => {},
-    monthDisabledStyle: { color: "#00000050" },
+    onMonthTapped: month => {},
     onYearChanged: year => {},
+    monthDisabledStyle: { color: "#00000050" },
     localeLanguage: "en",
     localeSettings: {},
+    swipable: false,
     velocityThreshold: 0.3,
     directionalOffsetThreshold: 80,
     gestureIsClickThreshold: 5,
@@ -218,7 +221,7 @@ class MonthSelector extends React.Component<
   }
 
   handleMonthTaps = (month: moment.Moment) => {
-    this.props.monthTapped(month)
+    this.props.onMonthTapped(month)
   }
 
   handNextPrevTaps = (isNext: boolean) => {
@@ -295,6 +298,8 @@ class MonthSelector extends React.Component<
       this.state.initialView,
     )
     const {
+      containerStyle,
+      swipable,
       velocityThreshold,
       directionalOffsetThreshold,
       gestureIsClickThreshold,
@@ -307,17 +312,15 @@ class MonthSelector extends React.Component<
 
     return (
       <GestureRecognizer
-        onSwipe={direction => this.handleSwipe(direction)}
+        onSwipe={direction => (swipable ? this.handleSwipe(direction) : null)}
         config={SWIPE_CONFIG}
-        style={[styles.container, this.props.containerStyle]}
+        style={[styles.container, containerStyle]}
       >
-        {/* <View style={[styles.container, this.props.containerStyle]}> */}
         {this.renderHeader()}
         {this.renderQ(months, 0)}
         {this.renderQ(months, 1)}
         {this.renderQ(months, 2)}
         {this.renderQ(months, 3)}
-        {/* </View> */}
       </GestureRecognizer>
     )
   }
