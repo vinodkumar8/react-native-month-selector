@@ -1,32 +1,45 @@
 {
-  "name": "react-native-month-selector",
-  "version": "1.1.0",
+  "name": "rn-month-selector",
+  "version": "1.0.0",
   "description": "Month selector in react native",
   "main": "src/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "typescript": {
+    "definition": "./src/rn-month-selector.d.ts"
+  },
+  "types": "./src/rn-month-selector.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "lint": "tslint -p tsconfig.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vinodkumar8/react-native-month-selector.git"
+    "url": "git+https://github.com/is343/rn-month-selector"
   },
   "keywords": [
     "react-native",
     "month",
-    "selector"
+    "selector",
+    "typescript"
   ],
-  "author": "Vinod Prajapati",
+  "author": "Ivan Schurawel",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vinodkumar8/react-native-month-selector/issues"
+    "url": "https://github.com/is343/rn-month-selector/issues"
   },
-  "homepage": "https://github.com/vinodkumar8/react-native-month-selector#readme",
+  "homepage": "https://github.com/is343/rn-month-selector#readme",
   "dependencies": {
     "moment": "^2.20.1"
   },
-  "peerDependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-native": "^0.48.0"
+  "peerDependencies": {},
+  "devDependencies": {
+    "@types/react": "^16.7.13",
+    "@types/react-native": "^0.57.18",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.2"
   }
 }

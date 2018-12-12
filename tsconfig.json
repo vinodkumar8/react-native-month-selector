@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "jsx": "react-native",
+    "module": "es2015",
+    "lib": ["es2016"],
+    "outDir": "./lib",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "target": "es2016"
+  },
+  "exclude": ["node_modules"],
+  "include": ["src"]
+}
