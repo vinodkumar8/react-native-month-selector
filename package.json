@@ -1,15 +1,15 @@
 {
   "name": "react-native-swipeable-month-selector",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Swipable month selector in react native",
-  "main": "dist/MonthSelector.js",
+  "main": "dist/index.js",
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
   "typescript": {
-    "definition": "dist/MonthSelector.d.ts"
+    "definition": "dist/index.d.ts"
   },
-  "types": "dist/MonthSelector.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "lint": "tslint -p tsconfig.json",
