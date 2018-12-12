@@ -1,6 +1,6 @@
-import * as moment from "moment"
+import moment from "moment"
 import PropTypes from "prop-types"
-import * as React from "react"
+import React from "react"
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,9 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+import GestureRecognizer, {
+  swipeDirections,
+} from "react-native-swipe-gestures"
 
 const DATE_FORMAT = "DD-MM-YYYY"
 const MONTH_YEAR_FORMAT = "MMYYYY"
@@ -41,10 +44,15 @@ interface MonthSelectorProps {
   currentMonthTextStyle: TextStyle
   monthFormat: string
   initialView: moment.Moment
-  monthTapped: (month: moment.Moment) => any
-  monthDisabledStyle: TextStyle
+  onMonthTapped: (month: moment.Moment) => any
   onYearChanged: (year: moment.Moment) => any
-  locale: string
+  monthDisabledStyle: TextStyle
+  localeLanguage: string
+  localeSettings: moment.LocaleSpecification
+  swipable: boolean
+  velocityThreshold: number
+  directionalOffsetThreshold: number
+  gestureIsClickThreshold: number
 }
 
 interface MonthSelectorState {
@@ -74,10 +82,15 @@ class MonthSelector extends React.Component<
     currentMonthTextStyle: PropTypes.any,
     monthFormat: PropTypes.string,
     initialView: PropTypes.any,
-    monthTapped: PropTypes.func,
-    monthDisabledStyle: PropTypes.any,
+    onMonthTapped: PropTypes.func,
     onYearChanged: PropTypes.func,
-    locale: PropTypes.string,
+    monthDisabledStyle: PropTypes.any,
+    localeLanguage: PropTypes.string,
+    localeSettings: PropTypes.any,
+    swipable: PropTypes.bool,
+    velocityThreshold: PropTypes.number,
+    directionalOffsetThreshold: PropTypes.number,
+    gestureIsClickThreshold: PropTypes.number,
   }
 
   static defaultProps = {
@@ -101,20 +114,23 @@ class MonthSelector extends React.Component<
     },
     monthTextStyle: { color: "#000" },
     initialView: moment(),
-    monthTapped: month => {},
-    monthDisabledStyle: { color: "#00000050" },
+    onMonthTapped: month => {},
     onYearChanged: year => {},
-    locale: "en-gb",
+    monthDisabledStyle: { color: "#00000050" },
+    localeLanguage: "en",
+    localeSettings: {},
+    swipable: false,
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80,
+    gestureIsClickThreshold: 5,
   }
   constructor(props) {
     super(props)
-    this.handleMonthTaps = this.handleMonthTaps.bind(this)
-    this.handNextPrevTaps = this.handNextPrevTaps.bind(this)
     this.state = { initialView: props.initialView }
   }
 
   componentWillMount() {
-    moment.locale(this.props.locale)
+    moment.updateLocale(this.props.localeLanguage, this.props.localeSettings)
   }
 
   getSelectedBackgroundColor(month: moment.Moment) {
@@ -204,11 +220,11 @@ class MonthSelector extends React.Component<
     return false
   }
 
-  handleMonthTaps(month: moment.Moment) {
-    this.props.monthTapped(month)
+  handleMonthTaps = (month: moment.Moment) => {
+    this.props.onMonthTapped(month)
   }
 
-  handNextPrevTaps(isNext: boolean) {
+  handNextPrevTaps = (isNext: boolean) => {
     if (this.isYearEnabled(isNext)) {
       const currentInitialView = this.state.initialView.clone()
       this.setState({
@@ -265,18 +281,47 @@ class MonthSelector extends React.Component<
     )
   }
 
+  handleSwipe(gestureName) {
+    const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections
+    switch (gestureName) {
+      case SWIPE_LEFT:
+        this.handNextPrevTaps(true)
+        break
+      case SWIPE_RIGHT:
+        this.handNextPrevTaps(false)
+        break
+    }
+  }
+
   render() {
     const months: moment.Moment[] = getMonthListFirstDayDate(
       this.state.initialView,
     )
+    const {
+      containerStyle,
+      swipable,
+      velocityThreshold,
+      directionalOffsetThreshold,
+      gestureIsClickThreshold,
+    } = this.props
+    const SWIPE_CONFIG = {
+      velocityThreshold,
+      directionalOffsetThreshold,
+      gestureIsClickThreshold,
+    }
+
     return (
-      <View style={[styles.container, this.props.containerStyle]}>
+      <GestureRecognizer
+        onSwipe={direction => (swipable ? this.handleSwipe(direction) : null)}
+        config={SWIPE_CONFIG}
+        style={[styles.container, containerStyle]}
+      >
         {this.renderHeader()}
         {this.renderQ(months, 0)}
         {this.renderQ(months, 1)}
         {this.renderQ(months, 2)}
         {this.renderQ(months, 3)}
-      </View>
+      </GestureRecognizer>
     )
   }
 }
