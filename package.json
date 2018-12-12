@@ -1,7 +1,7 @@
 {
   "name": "rn-month-selector",
   "version": "1.0.0",
-  "description": "Month selector in react native",
+  "description": "Swipable month selector in react native",
   "main": "dist/MonthSelector.js",
   "files": [
     "lib/**/*"
@@ -28,7 +28,10 @@
     "react-native",
     "month",
     "selector",
-    "typescript"
+    "typescript",
+    "gesture",
+    "swipe",
+    "swipable"
   ],
   "author": "Ivan Schurawel",
   "license": "MIT",
