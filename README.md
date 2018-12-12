@@ -2,7 +2,7 @@
 
 This package lets you select months. It also allows you to use swipe gestures to navigate between pages.
 
-> Inspired by [vinodkumar8/react-native-month-selector](https://github.com/vinodkumar8/react-native-month-selector/), which unfortunately didn't seem to be maintained any longer.
+> Inspired by [vinodkumar8/react-native-month-selector](https://github.com/vinodkumar8/react-native-month-selector/), which unfortunately doesn't seem to be maintained any longer.
 
 ## Install
 
