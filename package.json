@@ -32,7 +32,8 @@
   },
   "homepage": "https://github.com/is343/rn-month-selector#readme",
   "dependencies": {
-    "moment": "^2.20.1"
+    "moment": "^2.20.1",
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {},
   "devDependencies": {

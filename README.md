@@ -1,15 +1,15 @@
 # react-native-month-selector
 
-This package lets you select months. This is fully customizable with following props. 
-
+This package lets you select months. This is fully customizable with following props.
 
 ## Install
+
 ```js
 npm install react-native-month-selector --save
 yarn add react-native-month-selector
 ```
 
-```js
+````js
 static propTypes = {
     selectedDate: PropTypes.any,
     // The date which is currently selected
@@ -26,6 +26,8 @@ static propTypes = {
     seperatorHeight: PropTypes.number,
     nextIcon: PropTypes.any,
     prevIcon: PropTypes.any,
+    nextText: PropTypes.string,
+    prevText: PropTypes.string,
     containerStyle: PropTypes.any,
     yearTextStyle: PropTypes.any,
     monthTextStyle: PropTypes.any,
@@ -34,7 +36,7 @@ static propTypes = {
     initialView: PropTypes.any,
     monthTapped: PropTypes.func,
     monthDisabledStyle: PropTypes.any,
-    onYearChanged: PropTypes.func,
+    onYearChanged: PropTypes.string,
   }```
 
   ## Sample Usage
@@ -49,7 +51,7 @@ static propTypes = {
            monthTapped={(date) => this.setState({ month: date })}
         />
       </View>
-```
+````
 
 You can see actual [example](example/example/App.js)
 
@@ -58,4 +60,3 @@ And It will look like below
 ![Month Calendar](screenshot.png?raw=true "Month Calendar")
 
 Feel free to Raise PR should you wish to contribute.
-

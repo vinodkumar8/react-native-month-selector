@@ -1,4 +1,5 @@
 import * as moment from "moment"
+import PropTypes from "prop-types"
 import * as React from "react"
 import {
   StyleSheet,
@@ -54,6 +55,31 @@ class MonthSelector extends React.Component<
   MonthSelectorProps,
   MonthSelectorState
 > {
+  static propTypes = {
+    selectedDate: PropTypes.any,
+    currentDate: PropTypes.any,
+    maxDate: PropTypes.any,
+    minDate: PropTypes.any,
+    selectedBackgroundColor: PropTypes.string,
+    selectedMonthStyle: PropTypes.any,
+    seperatorColor: PropTypes.string,
+    seperatorHeight: PropTypes.number,
+    nextIcon: PropTypes.any,
+    prevIcon: PropTypes.any,
+    nextText: PropTypes.string,
+    prevText: PropTypes.string,
+    containerStyle: PropTypes.any,
+    yearTextStyle: PropTypes.any,
+    monthTextStyle: PropTypes.any,
+    currentMonthTextStyle: PropTypes.any,
+    monthFormat: PropTypes.string,
+    initialView: PropTypes.any,
+    monthTapped: PropTypes.func,
+    monthDisabledStyle: PropTypes.any,
+    onYearChanged: PropTypes.func,
+    locale: PropTypes.string,
+  }
+
   static defaultProps = {
     selectedDate: moment(),
     currentDate: moment(),
