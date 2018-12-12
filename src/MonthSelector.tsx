@@ -1,6 +1,6 @@
-import * as moment from "moment"
+import moment from "moment"
 import PropTypes from "prop-types"
-import * as React from "react"
+import React from "react"
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,9 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+import GestureRecognizer, {
+  swipeDirections,
+} from "react-native-swipe-gestures"
 
 const DATE_FORMAT = "DD-MM-YYYY"
 const MONTH_YEAR_FORMAT = "MMYYYY"
@@ -44,7 +47,11 @@ interface MonthSelectorProps {
   monthTapped: (month: moment.Moment) => any
   monthDisabledStyle: TextStyle
   onYearChanged: (year: moment.Moment) => any
-  locale: string
+  localeLanguage: string
+  localeSettings: moment.LocaleSpecification
+  velocityThreshold: number
+  directionalOffsetThreshold: number
+  gestureIsClickThreshold: number
 }
 
 interface MonthSelectorState {
@@ -77,7 +84,11 @@ class MonthSelector extends React.Component<
     monthTapped: PropTypes.func,
     monthDisabledStyle: PropTypes.any,
     onYearChanged: PropTypes.func,
-    locale: PropTypes.string,
+    localeLanguage: PropTypes.string,
+    localeSettings: PropTypes.any,
+    velocityThreshold: PropTypes.number,
+    directionalOffsetThreshold: PropTypes.number,
+    gestureIsClickThreshold: PropTypes.number,
   }
 
   static defaultProps = {
@@ -104,17 +115,19 @@ class MonthSelector extends React.Component<
     monthTapped: month => {},
     monthDisabledStyle: { color: "#00000050" },
     onYearChanged: year => {},
-    locale: "en-gb",
+    localeLanguage: "en",
+    localeSettings: {},
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80,
+    gestureIsClickThreshold: 5,
   }
   constructor(props) {
     super(props)
-    this.handleMonthTaps = this.handleMonthTaps.bind(this)
-    this.handNextPrevTaps = this.handNextPrevTaps.bind(this)
     this.state = { initialView: props.initialView }
   }
 
   componentWillMount() {
-    moment.locale(this.props.locale)
+    moment.updateLocale(this.props.localeLanguage, this.props.localeSettings)
   }
 
   getSelectedBackgroundColor(month: moment.Moment) {
@@ -204,11 +217,11 @@ class MonthSelector extends React.Component<
     return false
   }
 
-  handleMonthTaps(month: moment.Moment) {
+  handleMonthTaps = (month: moment.Moment) => {
     this.props.monthTapped(month)
   }
 
-  handNextPrevTaps(isNext: boolean) {
+  handNextPrevTaps = (isNext: boolean) => {
     if (this.isYearEnabled(isNext)) {
       const currentInitialView = this.state.initialView.clone()
       this.setState({
@@ -265,18 +278,47 @@ class MonthSelector extends React.Component<
     )
   }
 
+  handleSwipe(gestureName) {
+    const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections
+    switch (gestureName) {
+      case SWIPE_LEFT:
+        this.handNextPrevTaps(true)
+        break
+      case SWIPE_RIGHT:
+        this.handNextPrevTaps(false)
+        break
+    }
+  }
+
   render() {
     const months: moment.Moment[] = getMonthListFirstDayDate(
       this.state.initialView,
     )
+    const {
+      velocityThreshold,
+      directionalOffsetThreshold,
+      gestureIsClickThreshold,
+    } = this.props
+    const SWIPE_CONFIG = {
+      velocityThreshold,
+      directionalOffsetThreshold,
+      gestureIsClickThreshold,
+    }
+
     return (
-      <View style={[styles.container, this.props.containerStyle]}>
+      <GestureRecognizer
+        onSwipe={direction => this.handleSwipe(direction)}
+        config={SWIPE_CONFIG}
+        style={[styles.container, this.props.containerStyle]}
+      >
+        {/* <View style={[styles.container, this.props.containerStyle]}> */}
         {this.renderHeader()}
         {this.renderQ(months, 0)}
         {this.renderQ(months, 1)}
         {this.renderQ(months, 2)}
         {this.renderQ(months, 3)}
-      </View>
+        {/* </View> */}
+      </GestureRecognizer>
     )
   }
 }

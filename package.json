@@ -2,18 +2,23 @@
   "name": "rn-month-selector",
   "version": "1.0.0",
   "description": "Month selector in react native",
-  "main": "src/index.js",
+  "main": "dist/MonthSelector.js",
   "files": [
     "lib/**/*"
   ],
   "typescript": {
-    "definition": "./src/rn-month-selector.d.ts"
+    "definition": "dist/MonthSelector.d.ts"
   },
-  "types": "./src/rn-month-selector.d.ts",
+  "types": "dist/MonthSelector.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
@@ -33,7 +38,8 @@
   "homepage": "https://github.com/is343/rn-month-selector#readme",
   "dependencies": {
     "moment": "^2.20.1",
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "react-native-swipe-gestures": "^1.0.3"
   },
   "peerDependencies": {},
   "devDependencies": {
