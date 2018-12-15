@@ -1,6 +1,6 @@
 {
-  "name": "react-native-swipeable-month-selector",
-  "version": "1.0.3",
+  "name": "react-native-month-selector",
+  "version": "1.3.0",
   "description": "Swipable month selector in react native",
   "main": "dist/MonthSelector.js",
   "files": [
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/is343/react-native-swipeable-month-selector"
+    "url": "git+https://github.com/vinodkumar8/react-native-month-selector.git"
   },
   "keywords": [
     "react-native",
@@ -32,12 +32,12 @@
     "swipe",
     "swipable"
   ],
-  "author": "Ivan Schurawel",
+  "author": "Vinod Prajapati, Ivan Schurawel",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/is343/react-native-swipeable-month-selector/issues"
+    "url": "https://github.com/vinodkumar8/react-native-month-selector/issues"
   },
-  "homepage": "https://github.com/is343/react-native-swipeable-month-selector#readme",
+  "homepage": "https://github.com/vinodkumar8/react-native-month-selector#readme",
   "dependencies": {
     "moment": "^2.20.1",
     "prop-types": "^15.6.0",
