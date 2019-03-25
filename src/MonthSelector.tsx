@@ -1,17 +1,9 @@
-import moment from "moment"
-import PropTypes from "prop-types"
-import React from "react"
-import {
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from "react-native"
-import GestureRecognizer, {
-  swipeDirections,
-} from "react-native-swipe-gestures"
+import moment from "moment";
+import "moment/min/locales";
+import PropTypes from "prop-types";
+import React from "react";
+import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
+import GestureRecognizer, { swipeDirections } from "react-native-swipe-gestures";
 
 const DATE_FORMAT = "DD-MM-YYYY"
 const MONTH_YEAR_FORMAT = "MMYYYY"
