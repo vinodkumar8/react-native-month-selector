@@ -1,12 +1,12 @@
-# react-native-swipeable-month-selector
+# react-native-month-selector
 
 This package lets you select months. It also allows you to use swipe gestures to navigate between pages.
 
 ## Install
 
 ```
-npm install react-native-swipeable-month-selector --save
-yarn add react-native-swipeable-month-selector
+npm install react-native-month-selector --save
+yarn add react-native-month-selector
 ```
 
 ## Props
