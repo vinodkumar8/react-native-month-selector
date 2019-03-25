@@ -35,9 +35,9 @@
   "author": "Vinod Prajapati, Ivan Schurawel",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vinodkumar8/react-native-month-selector.git/issues"
+    "url": "https://github.com/vinodkumar8/react-native-month-selector/issues"
   },
-  "homepage": "https://github.com/vinodkumar8/react-native-month-selector.git#readme",
+  "homepage": "https://github.com/vinodkumar8/react-native-month-selector#readme",
   "dependencies": {
     "moment": "^2.20.1",
     "prop-types": "^15.6.0",
