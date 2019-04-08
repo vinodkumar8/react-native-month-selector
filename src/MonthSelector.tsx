@@ -1,4 +1,5 @@
 import moment from "moment"
+import "moment/min/locales"
 import PropTypes from "prop-types"
 import React from "react"
 import {
