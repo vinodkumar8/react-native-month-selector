@@ -43,13 +43,15 @@ yarn add react-native-month-selector
 ## Sample Usage
 
 ```
+import MonthSelectorCalendar from 'react-native-month-selector'; //add this import line
+
   <View style={styles.container}>
       <Text style={styles.welcome}>
         Selected Month is { this.state.month && this.state.month.format('MMM YYYY')}
       </Text>
       <MonthSelectorCalendar
           selectedDate={this.state.month}
-          monthTapped={(date) => this.setState({ month: date })}
+          onMonthTapped={(date) => this.setState({ month: date })} 
       />
     </View>
 ```
