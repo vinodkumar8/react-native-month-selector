@@ -49,7 +49,7 @@ yarn add react-native-month-selector
       </Text>
       <MonthSelectorCalendar
           selectedDate={this.state.month}
-          monthTapped={(date) => this.setState({ month: date })}
+          onMonthTapped={(date) => this.setState({ month: date })}
       />
     </View>
 ```
