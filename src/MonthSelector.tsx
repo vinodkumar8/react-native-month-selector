@@ -43,6 +43,7 @@ interface MonthSelectorProps {
   yearTextStyle: TextStyle
   monthTextStyle: TextStyle
   currentMonthTextStyle: TextStyle
+  monthWidth: number
   monthFormat: string
   initialView: moment.Moment
   onMonthTapped: (month: moment.Moment) => any
@@ -171,6 +172,9 @@ class MonthSelector extends React.Component<
           width: this.props.monthWidth,
           borderRadius: this.props.monthWidth /2, 
         }
+    }
+    else {
+      return {};
     }
 }
 
