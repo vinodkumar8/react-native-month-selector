@@ -82,6 +82,7 @@ class MonthSelector extends React.Component<
     monthTextStyle: PropTypes.any,
     currentMonthTextStyle: PropTypes.any,
     monthFormat: PropTypes.string,
+    monthWidth: PropTypes.number,
     initialView: PropTypes.any,
     onMonthTapped: PropTypes.func,
     onYearChanged: PropTypes.func,
@@ -114,6 +115,7 @@ class MonthSelector extends React.Component<
       color: "#22ee11",
     },
     monthTextStyle: { color: "#000" },
+    monthWidth: 40,
     initialView: moment(),
     onMonthTapped: month => {},
     onYearChanged: year => {},
@@ -162,12 +164,23 @@ class MonthSelector extends React.Component<
     return {}
   }
 
+  getSelectedMonthWidth() {
+    if (this.props.monthWidth) {
+        return { 
+          height: this.props.monthWidth,
+          width: this.props.monthWidth,
+          borderRadius: this.props.monthWidth /2, 
+        }
+    }
+}
+
   getMonthActualComponent(month: moment.Moment, isDisabled: boolean = false) {
     return (
       <View
         style={[
           isDisabled === true && { flex: 1, alignItems: "center" },
           styles.monthStyle,
+          this.getSelectedMonthWidth(),
           this.getSelectedBackgroundColor(month),
         ]}
       >
