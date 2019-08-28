@@ -37,12 +37,15 @@ interface MonthSelectorProps {
   seperatorHeight: number
   nextIcon: JSX.Element
   prevIcon: JSX.Element
+  emptyPrevNextIcon: JSX.Element
+  prevNextIcon: JSX.Element
   nextText: string
   prevText: string
   containerStyle: ViewStyle
   yearTextStyle: TextStyle
   monthTextStyle: TextStyle
   currentMonthTextStyle: TextStyle
+  monthWidth: number
   monthFormat: string
   initialView: moment.Moment
   onMonthTapped: (month: moment.Moment) => any
@@ -75,6 +78,7 @@ class MonthSelector extends React.Component<
     seperatorHeight: PropTypes.number,
     nextIcon: PropTypes.any,
     prevIcon: PropTypes.any,
+    emptyPrevNextIcon: PropTypes.any,
     nextText: PropTypes.string,
     prevText: PropTypes.string,
     containerStyle: PropTypes.any,
@@ -82,6 +86,7 @@ class MonthSelector extends React.Component<
     monthTextStyle: PropTypes.any,
     currentMonthTextStyle: PropTypes.any,
     monthFormat: PropTypes.string,
+    monthWidth: PropTypes.number,
     initialView: PropTypes.any,
     onMonthTapped: PropTypes.func,
     onYearChanged: PropTypes.func,
@@ -105,6 +110,7 @@ class MonthSelector extends React.Component<
     seperatorColor: "#b6c3cb",
     nextIcon: null,
     prevIcon: null,
+    emptyPrevNextIcon: null,
     nextText: "Next",
     prevText: "Prev",
     containerStyle: null,
@@ -114,6 +120,7 @@ class MonthSelector extends React.Component<
       color: "#22ee11",
     },
     monthTextStyle: { color: "#000" },
+    monthWidth: 40,
     initialView: moment(),
     onMonthTapped: month => {},
     onYearChanged: year => {},
@@ -162,12 +169,26 @@ class MonthSelector extends React.Component<
     return {}
   }
 
+  getSelectedMonthWidth() {
+    if (this.props.monthWidth) {
+        return { 
+          height: this.props.monthWidth,
+          width: this.props.monthWidth,
+          borderRadius: this.props.monthWidth /2, 
+        }
+    }
+    else {
+      return {};
+    }
+}
+
   getMonthActualComponent(month: moment.Moment, isDisabled: boolean = false) {
     return (
       <View
         style={[
           isDisabled === true && { flex: 1, alignItems: "center" },
           styles.monthStyle,
+          this.getSelectedMonthWidth(),
           this.getSelectedBackgroundColor(month),
         ]}
       >
@@ -260,11 +281,13 @@ class MonthSelector extends React.Component<
         ]}
       >
         <TouchableOpacity onPress={() => this.handNextPrevTaps(false)}>
-          {this.props.prevIcon ? (
-            this.props.prevIcon
-          ) : (
-            <Text>{this.props.prevText}</Text>
-          )}
+        {this.props.emptyPrevNextIcon && !this.isYearEnabled(false) ? (
+          this.props.emptyPrevNextIcon
+         ) : this.props.prevIcon ? (
+              this.props.prevIcon
+            ) : (
+              <Text>{this.props.prevText}</Text>
+        )}
         </TouchableOpacity>
         <View style={styles.yearViewStyle}>
           <Text style={this.props.yearTextStyle}>
@@ -272,11 +295,13 @@ class MonthSelector extends React.Component<
           </Text>
         </View>
         <TouchableOpacity onPress={() => this.handNextPrevTaps(true)}>
-          {this.props.nextIcon ? (
-            this.props.nextIcon
-          ) : (
-            <Text>{this.props.nextText}</Text>
-          )}
+        {this.props.emptyPrevNextIcon && !this.isYearEnabled(true) ? (
+          this.props.emptyPrevNextIcon 
+          ) :this.props.nextIcon ? (
+              this.props.nextIcon
+            ) : (
+              <Text>{this.props.nextText}</Text>
+        )}
         </TouchableOpacity>
       </View>
     )
