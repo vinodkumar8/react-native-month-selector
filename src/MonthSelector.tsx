@@ -349,6 +349,7 @@ const styles = StyleSheet.create<Styles>({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
+    overflow: 'hidden',
   },
   headerStyle: {
     height: 64,
